@@ -1,130 +1,110 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import { Route, Link, Switch, Redirect } from "react-router-dom";
-import axios from "axios";
-import Home from "./Home";
+import './App.css';
+import React, {Component} from 'react'
+import axios from 'axios'
+import {Route,Link,Switch} from 'react-router-dom'
 import AllGuides from "./AllGuides.js";
 import GuideDetail from "./GuideDetail.js";
-const backendUrl =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:3000/api";
 
-function App() {
-  const [guides, setGuides] = useState([]);
+const backendUrl = "https://travel-junkie-backend.herokuapp.com/api"
 
-  useEffect(() => {
-    async function getGuides() {
-      let axiosGuides = await axios(`${backendUrl}/guides`);
-      setGuides(axiosGuides.data.allGuides);
+class App extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      guide: []
     }
-    getGuides();
-  }, []);
+  }
 
-  const createReview = async (e) => {
-    e.preventDefault();
-    let guideId = parseInt(e.target.guideId.value);
-    let response = await axios.post(
-      `${backendUrl}/guides/${guideId}/newreview`,
-      {
-        title: e.target.title.value,
-        guideId: guideId,
-      }
-    );
+  componentDidMount = () => {
+    this.getGuides()
+  }
 
-    let data = response.data;
-    console.log(data);
+  getGuides = async () => {
+    const response = await axios(`${backendUrl}/guides`)
 
-    await setGuides(
-      guides.map((guide) => {
-        if (guide.id === data.review.guideId) {
-          // artist.Reviews.push(data.review);
-          guide.Reviews = [...guide.Reviews, data.review];
-        }
-        return guide;
-      })
-    );
-  };
+    this.setState({
+      guide: response.data.allGuides
+    })
+  }
 
-  const createGuide = async (e) => {
-    e.preventDefault();
-    let response = await axios.post(`${backendUrl}/guides/`, {
-      name: e.target.name.value,
-    });
+  addGuide = async (event) => {
+    event.preventDefault()
 
-    let newGuide = response.data.newGuide;
+    await axios.post(`${backendUrl}/guides`,{
+      name: event.target.name.value
+    })
 
-    await setGuides([...guides, newGuide]);
-  };
+    this.getGuides()
+  }
 
-  const deleteGuide = async (e) => {
-    e.preventDefault();
-    let guideId = parseInt(e.target.id);
-    let arrayIndex = e.target.getAttribute("arrayindex");
+  addReview = async (event) => {
+    event.preventDefault()
 
-    await axios.delete(`${backendUrl}/guides/${guideId}`);
+    let guideId = event.target.guideId.value
 
-    const guidesCopy = [...guides];
-    guidesCopy.splice(arrayIndex, 1);
-    await setGuides([...guidesCopy]);
-  };
+    await axios.post(`${backendUrl}/guides/${guideId}/newreview`,{
+      title: event.target.title.value,
+      guideId: guideId
+    })
 
-  const updateGuide = async (e) => {
-    e.preventDefault();
-    let guideId = parseInt(e.target.guideId.value);
-    let response = await axios.put(`${backendUrl}/guides/${guideId}`, {
-      name: e.target.name.value,
-      guideId: guideId,
-    });
+    this.getGuides()
+  }
 
-    let updatedGuide = response.data.guide;
+  updateGuide = async(event) => {
+    event.preventDefault()
 
-    await setGuides(
-      guides.map((guide, index) => {
-        if (guide.id === updatedGuide.id) {
-          return updatedGuide;
-        } else {
-          return guide;
-        }
-      })
-    );
-  };
+    let guideId = event.target.guideId.value
+    
+    await axios.put(`${backendUrl}/guides/${guideId}`, {
+      name:event.target.name.value,
+      guideId: guideId
+    })
 
+    this.getGuides()
+  }
+
+  deleteGuide = async(event) => {
+    event.preventDefault()
+
+    let guideId = event.target.id
+
+    await axios.delete(`${backendUrl}/guides/${guideId}`)
+
+    this.getGuides()
+  }
+  render() {
   return (
     <div className="App">
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/guides">All Guides</Link>
+        <Link to="/">All Guides</Link>
       </nav>
+
       <main>
         <Switch>
-          <Route exact path="/" component={() => <Home />} />
-          <Route
-            exact
-            path="/guides"
-            component={() => (
-              <AllGuides
-                guides={guides}
-                createGuide={(e) => createGuide(e)}
-                deleteGuide={(e) => deleteGuide(e)}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/guides/:id"
-            component={(routerProps) => (
-              <GuideDetail
-                {...routerProps}
-                guides={guides}
-                createReview={(e) => createReview(e)}
-                updateGuide={(e) => updateGuide(e)}
-              />
-            )}
-          />
-          <Route path="/*" render={() => <Redirect to="/" />} />
+        <Route
+          exact path="/"
+          component={() => <AllGuides 
+            guides={this.state.guide}
+            addGuide={this.addGuide}
+            deleteGuide={this.deleteGuide}
+            
+            />}
+        />
+        <Route
+          path="/guides/:id"
+          component={(routerProps)=> <GuideDetail 
+            {...routerProps}
+            guides={this.state.guide}
+            addReview={this.addReview}
+            updateGuide={this.updateGuide}
+            />}
+        />
         </Switch>
       </main>
     </div>
   );
+}
 }
 
 export default App;

@@ -1,15 +1,12 @@
 import React, {Component} from 'react'
 
-class GuideDetail extends Component {
+class Profile extends Component {
 
     render() {
-        const guideDetail = this.props.guides.find(guide => {
+        const userDetail = this.props.guides.find(guide => {
             return guide.id == this.props.match.params.id
         })
         // console.log(guideDetail)
-        const guideReviews = guideDetail.Reviews.map(review => {
-            return <li key={review.id}>{review.title}</li>
-        })
 
         return(
             <div>
@@ -35,4 +32,4 @@ class GuideDetail extends Component {
     }
 }
 
-export default GuideDetail
+export default Profile
