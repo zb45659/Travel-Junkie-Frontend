@@ -2,8 +2,15 @@ import './App.css';
 import React, {Component} from 'react'
 import axios from 'axios'
 import {Route,Link,Switch} from 'react-router-dom'
+
+
 import AllGuides from "./AllGuides.js";
 import GuideDetail from "./GuideDetail.js";
+import Profile from "./users/Profile"
+import Signup from "./users/Signup"
+import Login from "./users/Login"
+import MapContainer from "./map/Map"
+import SearchLocationInput from "./map/SearchLocationInput"
 
 const backendUrl = "https://travel-junkie-backend.herokuapp.com/api"
 
@@ -12,12 +19,14 @@ class App extends Component {
     super()
 
     this.state = {
-      guide: []
+      guide: [],
+      users: [],
     }
   }
 
   componentDidMount = () => {
     this.getGuides()
+    this.getUsers()
   }
 
   getGuides = async () => {
@@ -73,11 +82,66 @@ class App extends Component {
 
     this.getGuides()
   }
+
+  getUsers = async (event) => {
+    
+
+    // let userId = event.target.id
+
+    // let userId = allUsers.find(user => {
+    //   user.id == res.match.params.id
+    const response = await axios(`${backendUrl}/users`)
+
+    this.setState({
+      users: response.data.users
+    })
+  }
+
+  addUser = async (event) => {
+    event.preventDefault()
+
+    await axios.post(`${backendUrl}/auth/signup`,{
+      name: event.target.name.value,
+      username: event.target.username.value,
+      password: event.target.password.value
+    })
+
+    this.getUsers()
+  }
+
+  updateUsers = async(event) => {
+    event.preventDefault()
+
+    let userId = event.target.userId.value
+    
+    await axios.put(`${backendUrl}/users/${userId}`, {
+      name:event.target.name.value,
+      username: event.target.username.value,
+      password: event.target.password.value
+    })
+
+    this.getUsers()
+  }
+
+  deleteUsers = async(event) => {
+    event.preventDefault()
+
+    let userId = event.target.id
+
+    await axios.delete(`${backendUrl}/users/${userId}`)
+
+    this.getUsers()
+  }
   render() {
   return (
     <div className="App">
       <nav>
         <Link to="/">All Guides</Link>
+        <Link to="/signup">Sign Up</Link>
+        <Link to="/login">Log In</Link>
+        <ul key={this.userId}>
+          <Link to={`/users/profile/${this.userId}`}>Profile</Link>
+        </ul>
       </nav>
 
       <main>
@@ -90,7 +154,7 @@ class App extends Component {
             deleteGuide={this.deleteGuide}
             
             />}
-        />
+            />
         <Route
           path="/guides/:id"
           component={(routerProps)=> <GuideDetail 
@@ -99,7 +163,33 @@ class App extends Component {
             addReview={this.addReview}
             updateGuide={this.updateGuide}
             />}
+            />
+        <Route
+          path="/users/profile/:id"
+          component={(routerProps) => <Profile 
+            {...routerProps}
+            users={this.state.users}
+            deleteUser={this.deleteUsers}
+            />}
+            />
+        <Route
+          path="/signup"
+          component={() => <Signup 
+            addUser ={this.addUser}
+            
+            />}
         />
+        <Route
+          path="/login"
+          component={() => <Login 
+            getUsers = {this.getUsers}
+            history = {this.history}
+            />}
+        />
+        <Route exact path='/map' render={(props) =>
+        <MapContainer {...props} {...this.state}/>}/>
+        <Route exact path='/search' render={(props) =>
+        <SearchLocationInput {...props} {...this.state}/>}/>
         </Switch>
       </main>
     </div>
