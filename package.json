@@ -7,20 +7,34 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
     "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "cors": "^2.8.5",
     "google-maps-react": "^2.0.6",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
     "react-geocode": "^0.2.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
-  },
-  "scripts": {
+    "reactstrap": "^8.7.1",
+    "web-vitals": "^0.2.4",
+    "classnames": "2.2.6",
+    "moment": "2.26.0",
+    "node-sass": "4.14.1",
+    "nouislider": "14.5.0",
+    "react-bootstrap-switch": "15.5.3",
+    "react-datetime": "2.16.3"
+    },
+    "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.css",
+    "minify-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.css --source-map true"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +53,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "optionalDependencies": {
+    "typescript": "3.9.5"
+  },
+  "devDependencies": {
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8"
   }
 }
