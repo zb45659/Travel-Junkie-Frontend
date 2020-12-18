@@ -1,5 +1,8 @@
 # Travel-Junkie-Frontend
 
+# Project Links
+
+- [GitHub Repo](https://github.com/zb45659/Brew-App)
 
 # Wireframe 
 ![alt text](public/documents/travel-junkie-wireframe.jpg)
@@ -18,12 +21,18 @@ User Stories:
 10.Should be able to PUT update info for travel-guide
 
 # Technologies Used:
-
-# Installation:
-
+- **Command Line:** used to interact with computer, to create and move files 
+- **Visual Studio Code:** used to build code with HTML, CSS, and JavaScript
+- **Google Chrome:** used for launching website, and researching tips and tricks 
+- **Google Chrome Dev Tools:** used to debug code when running into problems, and to help visualize where code would show up in browser
+- **Heroku:** used for deployment
+- **CodePen:** used to sample code segments, and test different sceneraios on code
+- **W3schools:** useful website that helped with styling my app
+- **Node.js:** framework that works on top of node
+- **REACT:** framework used to store backend rendring of API data
 
 # Solved/Unsolved Problems:
-
+-**Adding Locations by near locations:** Need to get more experience using Google APIs so I can update the location search to allow the user to add filters
 
 
 
