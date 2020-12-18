@@ -31,15 +31,15 @@ function DemoFooter() {
             <ul>
               <li>
                 <a
-                  href="https://www.creative-tim.com?ref=pkr-footer"
+                  href="https://www.hostelworld.com/blog/every-single-travel-hack-you-will-ever-need/"
                   target="_blank"
                 >
-                  Creative Tim
+                  Travel Hacks
                 </a>
               </li>
               <li>
                 <a
-                  href="http://blog.creative-tim.com/?ref=pkr-footer"
+                  href="https://thetraveljunkieblog.com/"
                   target="_blank"
                 >
                   Blog
@@ -47,10 +47,10 @@ function DemoFooter() {
               </li>
               <li>
                 <a
-                  href="https://www.creative-tim.com/license?ref=pkr-footer"
+                  href="https://www.cheapoair.com/"
                   target="_blank"
                 >
-                  Licenses
+                  Cheap Flights
                 </a>
               </li>
             </ul>
@@ -58,7 +58,7 @@ function DemoFooter() {
           <div className="credits ml-auto">
             <span className="copyright">
               © {new Date().getFullYear()}, made with{" "}
-              <i className="fa fa-heart heart" /> by Creative Tim
+              <i className="fa fa-heart heart" /> by Zac Benckendorf GA student
             </span>
           </div>
         </Row>

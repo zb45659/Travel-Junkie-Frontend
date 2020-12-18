@@ -65,30 +65,30 @@ const loadScript = (url, callback) => {
         console.error(error);
       }
       );
-      MapPlaces()
+     
     
     
   }
 
-function MapPlaces() {
-   setPlaces(JSON.parse(JSON.stringify(place)))
-   console.log(places)
-const [places, setPlaces] = useState({
-    name:"",
-    lat: Number,
-    lng: Number
-})
+// function MapPlaces() {
+//    setPlaces(JSON.parse(JSON.stringify(place)))
+//    console.log(places)
+// const [places, setPlaces] = useState({
+//     name:"",
+//     lat: Number,
+//     lng: Number
+// })
 
-return (
-<div>
-    <Route exact path='/map' render={(prevProps) =>
-        <MapContainer {...prevProps} {...this.state}/>}/>
-    <Link to='/map' className='map'>
-        <i class="material-icons">Map it!</i>
-    </Link>
-</div>
-)
-}
+// return (
+// <div>
+//     <Route exact path='/map' render={(prevProps) =>
+//         <MapContainer {...prevProps} {...this.state}/>}/>
+//     <Link to='/map' className='map'>
+//         <i class="material-icons">Map it!</i>
+//     </Link>
+// </div>
+// )
+// }
 
 function GuideDetail(props) {
 // let places = []    
@@ -144,6 +144,7 @@ value={guideDetail.id} />
     />
 <input type="submit" value="Add Spot"></input>
 </form> 
+<Link to="/map">The Map!</Link>
 <ul>{guideReviews}</ul>
 
 </div>

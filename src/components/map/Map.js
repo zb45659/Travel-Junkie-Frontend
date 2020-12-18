@@ -44,7 +44,7 @@ export class MapContainer extends Component {
         style={mapStyles}
         initialCenter={{ lat: 41.52987, lng: -90.563177 }}
         >
-        {this.props.breweries.map(brewery => 
+        {/* {this.props.breweries.map(brewery => 
         <Marker
           id={brewery.id}
           key={brewery.id}
@@ -52,7 +52,7 @@ export class MapContainer extends Component {
           onClick={this.onMarkerClick}
           name={brewery.name}
           />
-        )}
+        )} */}
 
         <InfoWindow
           marker={this.state.activeMarker}
